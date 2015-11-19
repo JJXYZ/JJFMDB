@@ -1,0 +1,7 @@
+
+platform:ios,'6.0'
+
+source 'https://github.com/CocoaPods/Specs.git'
+
+pod 'FMDB', '~> 2.2'
+pod 'JJSandBox', '~> 1.0.0'

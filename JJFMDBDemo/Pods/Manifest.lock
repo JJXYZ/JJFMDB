@@ -1,0 +1,17 @@
+PODS:
+  - FMDB (2.5):
+    - FMDB/standard (= 2.5)
+  - FMDB/common (2.5)
+  - FMDB/standard (2.5):
+    - FMDB/common
+  - JJSandBox (1.0.0)
+
+DEPENDENCIES:
+  - FMDB (~> 2.2)
+  - JJSandBox (~> 1.0.0)
+
+SPEC CHECKSUMS:
+  FMDB: 96e8f1bcc1329e269330f99770ad4285d9003e52
+  JJSandBox: e02bc7a8812efe5a5254006041b8ec018a5c0ebf
+
+COCOAPODS: 0.38.2
