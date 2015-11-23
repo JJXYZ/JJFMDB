@@ -54,7 +54,7 @@
         }
         
         /**
-         *  如果属性是"primaryKey"和"rowid"排除(QMBaseDBModel里面的)
+         *  如果属性是"primaryKey"和"rowid"排除(JJBaseDBModel里面的)
          if([propertyName isEqualToString:@"primaryKey"]||
          [propertyName isEqualToString:@"rowid"])
          {

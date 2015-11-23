@@ -107,7 +107,7 @@
  *
  *  @param type type
  *
- *  @return QMSQLXXX
+ *  @return JJSQLXXX
  */
 + (NSString *)toDBType:(NSString *)type
 {
@@ -135,7 +135,7 @@
 /**
  *  根据bindingModel的类型,把数据库的值转换过来
  *
- *  @param bindingModel 继承QMBaseDBModel
+ *  @param bindingModel 继承JJBaseDBModel
  *  @param set          FMResultSet
  *  @param columeName   属性的Name
  *  @param columeType   属性的类型
@@ -225,8 +225,6 @@
     {
         value = [NSDate stringWithDate:value];
     }
-    
-    //    QMStaLog(STA_LOG_LESS, @"value = %@", value);
 }
 
 #pragma mark - Append SQL
@@ -432,7 +430,7 @@
 - (void)createTable
 {
     if([[self.class getTableName] isEmptyWithTrim]) {
-        NSLog(@"QMTableName is None!");
+        NSLog(@"TableName is None!");
         return;
     }
     

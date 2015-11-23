@@ -11,11 +11,11 @@
 @interface JJDatabaseQueue : FMDatabaseQueue
 
 /**
- *  创建QMDatabaseQueue
+ *  创建JJDatabaseQueue
  *
  *  @param aPath 路径
  *
- *  @return QMDatabaseQueue
+ *  @return JJDatabaseQueue
  */
 + (instancetype)databaseQueueWithPath:(NSString *)aPath;
 

@@ -9,10 +9,10 @@
 
 /**
  *  数据库基类Model
- *  1.Model继承于QMBaseDBModel
- *  2.Operate继承于QMBaseDBOperate
- *  3.重写QMBaseDBOperate的getBindingModelClass和getTableName方法
- *  4.重写QMBaseDBModel的getBindingOperateClass方法
+ *  1.Model继承于JJBaseDBModel
+ *  2.Operate继承于JJBaseDBOperate
+ *  3.重写JJBaseDBOperate的getBindingModelClass和getTableName方法
+ *  4.重写JJBaseDBModel的getBindingOperateClass方法
  *
  *  注意:支持的类型,NSString,NSNumber,NSInteger,char,int,short,
  *  long long,float,CGFloat,BOOL,NSData,UIImage
@@ -36,7 +36,7 @@
 /**
  *  返回绑定的OperateClass,子类重写
  *
- *  @return QMBaseDBOperate
+ *  @return JJBaseDBOperate
  */
 + (Class)getBindingOperateClass;
 
