@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|  
   s.name             = "JJFMDB"
-  s.version          = "1.0.2"
+  s.version          = "1.0.4"
   s.summary          = "A Tool used on iOS."  
   s.description      = <<-DESC  
                        封装FMDB,使开发者远离SQL语句.
