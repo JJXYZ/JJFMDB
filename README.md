@@ -8,5 +8,3 @@
  *  4.重写JJBaseDBModel的getBindingOperateClass方法
  *
  *  注意:支持的类型,NSString,NSNumber,NSInteger,char,int,short,long long,float,CGFloat,BOOL,NSData,UIImage
-
-请我喝个可乐吧 要百事冰镇的
