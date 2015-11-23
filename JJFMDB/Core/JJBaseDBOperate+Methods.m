@@ -8,10 +8,10 @@
 
 #import "JJBaseDBOperate+Methods.h"
 #import "JJDatabaseQueue.h"
-#import "JJBaseDBModel.h"
 #import "NSDate+JJFMDB.h"
 #import "NSString+JJFMDB.h"
 #import "NSObject+JJFMDBPropertys.h"
+#import "NSObject+JJDBObject.h"
 #import "FMDB.h"
 #import "JJSandBox.h"
 #import <UIKit/UIKit.h>
@@ -36,20 +36,34 @@
 - (instancetype)initWithDBQueue:(JJDatabaseQueue *)queue
 {
     self = [super init];
-    if (self)
-    {
+    if (self) {
         self.bindingQueue = queue;
         [self createProtypesAndColume];
-        //创建表
         [self createTable];
     }
     return self;
     
 }
 
-/**
- *  创建属性字典,名字数组,类型数组
- */
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        [self createProtypesAndColume];
+        [self createTable];
+    }
+    return self;
+}
+
+#pragma mark - Private Methods
+
+/** 获取数据库路径 */
+- (NSString *)getDataBasePath
+{
+    //数据库名称
+    return [JJSandBox getPathForDocuments:[NSString stringWithFormat:@"database.db"] inDir:@"DataBase"];
+}
+
+/** 创建属性字典,名字数组,类型数组 */
 - (void)createProtypesAndColume
 {
     self.columeNames = [NSMutableArray arrayWithCapacity:0];
@@ -60,7 +74,7 @@
     NSArray *pronames = [dic objectForKey:@"name"];
     NSArray *protypes = [dic objectForKey:@"type"];
     
-    if (pronames.count == protypes.count){
+    if (pronames.count == protypes.count) {
         self.propertys = [NSMutableDictionary dictionaryWithObjects:protypes forKeys:pronames];
     }
     
@@ -111,20 +125,20 @@
  */
 + (NSString *)toDBType:(NSString *)type
 {
-    if([type isEqualToString:@"char"] ||
+    if ([type isEqualToString:@"char"] ||
        [type isEqualToString:@"short"] ||
        [type isEqualToString:@"int"] ||
        [type isEqualToString:@"long"]) {
         return JJ_SQL_INTEGER;
     }
-    else if([type isEqualToString:@"float"] ||
+    else if ([type isEqualToString:@"float"] ||
             [type isEqualToString:@"double"]) {
         return JJ_SQL_FLOAT;
     }
-    else if([type isEqualToString:@"long long"]) {
+    else if ([type isEqualToString:@"long long"]) {
         return JJ_SQL_BIGINT;
     }
-    else if([type isEqualToString:@"NSData"] ||
+    else if ([type isEqualToString:@"NSData"] ||
             [type isEqualToString:@"UIImage"]) {
         return JJ_SQL_BLOB;
     }
@@ -140,13 +154,13 @@
  *  @param columeName   属性的Name
  *  @param columeType   属性的类型
  */
-- (void)bindingModelSetValue:(JJBaseDBModel *)bindingModel WithSet:(FMResultSet *)set columeName:(NSString *)columeName columeType:(NSString *)columeType
+- (void)bindingModelSetValue:(id)bindingModel WithSet:(FMResultSet *)set columeName:(NSString *)columeName columeType:(NSString *)columeType
 {
-    if([columeType isEqualToString:@"NSString"])
+    if ([columeType isEqualToString:@"NSString"])
     {
         [bindingModel setValue:[set stringForColumn:columeName] forKey:columeName];
     }
-    else if([columeType isEqualToString:@"int"] ||
+    else if ([columeType isEqualToString:@"int"] ||
             [columeType isEqualToString:@"long"] ||
             [columeType isEqualToString:@"long long"])
     {
@@ -170,24 +184,24 @@
     {
         [bindingModel setValue:[NSNumber numberWithLongLong:[set stringForColumn:columeName].longLongValue] forKey:columeName];
     }
-    else if([columeType isEqualToString:@"UIImage"])
+    else if ([columeType isEqualToString:@"UIImage"])
     {
         NSString* filename = [set stringForColumn:columeName];
-        if([JJSandBox isFileExists:[JJSandBox getPathForDocuments:filename inDir:@"dbImages"]])
+        if ([JJSandBox isFileExists:[JJSandBox getPathForDocuments:filename inDir:@"dbImages"]])
         {
             UIImage *img = [UIImage imageWithContentsOfFile:[JJSandBox getPathForDocuments:filename inDir:@"dbImages"]];
             [bindingModel setValue:img forKey:columeName];
         }
     }
-    else if([columeType isEqualToString:@"NSDate"])
+    else if ([columeType isEqualToString:@"NSDate"])
     {
         NSString* datestr = [set stringForColumn:columeName];
         [bindingModel setValue:[NSDate dateWithString:datestr] forKey:columeName];
     }
-    else if([columeType isEqualToString:@"NSData"])
+    else if ([columeType isEqualToString:@"NSData"])
     {
         NSString *filename = [set stringForColumn:columeName];
-        if([JJSandBox isFileExists:[JJSandBox getPathForDocuments:filename inDir:@"dbData"]])
+        if ([JJSandBox isFileExists:[JJSandBox getPathForDocuments:filename inDir:@"dbData"]])
         {
             NSData* data = [NSData dataWithContentsOfFile:[JJSandBox getPathForDocuments:filename inDir:@"dbData"]];
             [bindingModel setValue:data forKey:columeName];
@@ -203,25 +217,25 @@
  */
 - (void)valueForFileName:(id)value
 {
-    if (!value){
+    if (!value) {
         return ;
     }
     
     NSDate *date = [NSDate date];
     
-    if([value isKindOfClass:[UIImage class]])
+    if ([value isKindOfClass:[UIImage class]])
     {
         NSString *filename = [NSString stringWithFormat:@"img%f",[date timeIntervalSince1970]];
         [UIImageJPEGRepresentation(value, 1) writeToFile:[JJSandBox getPathForDocuments:filename inDir:@"dbImages"] atomically:YES];
         value = filename;
     }
-    else if([value isKindOfClass:[NSData class]])
+    else if ([value isKindOfClass:[NSData class]])
     {
         NSString *filename = [NSString stringWithFormat:@"data%f",[date timeIntervalSince1970]];
         [value writeToFile:[JJSandBox getPathForDocuments:filename inDir:@"dbdata"] atomically:YES];
         value = filename;
     }
-    else if([value isKindOfClass:[NSDate class]])
+    else if ([value isKindOfClass:[NSDate class]])
     {
         value = [NSDate stringWithDate:value];
     }
@@ -238,7 +252,7 @@
     NSMutableString *tableSql = [NSMutableString string];
     for (int i=0; i<self.columeNames.count; i++) {
         [tableSql appendFormat:@"%@ %@",[self.columeNames objectAtIndex:i],[self.columeTypes objectAtIndex:i]];
-        if(i+1 !=self.columeNames.count)
+        if (i+1 !=self.columeNames.count)
         {
             [tableSql appendString:@","];
         }
@@ -258,7 +272,7 @@
 - (NSString *)dictionaryToSqlWhere:(NSDictionary *)dic andValues:(NSMutableArray  *)values
 {
     NSMutableString *whereKey = [NSMutableString stringWithCapacity:0];
-    if(dic != nil && dic.count >0 )
+    if (dic != nil && dic.count >0 )
     {
         NSArray *keys = dic.allKeys;
         for (int i=0; i< keys.count;i++) {
@@ -266,15 +280,15 @@
             NSString *key = [keys objectAtIndex:i];
             id va = [dic objectForKey:key];
             
-            if([va isKindOfClass:[NSArray class]])
+            if ([va isKindOfClass:[NSArray class]])
             {
                 //当NSDictionary的value是NSArray类型时,使用or当中间值
                 NSArray* vlist = va;
                 for (int j=0; j<vlist.count; j++) {
                     id subvalue = [vlist objectAtIndex:j];
-                    if(whereKey.length > 0)
+                    if (whereKey.length > 0)
                     {
-                        if(j > 0)
+                        if (j > 0)
                         {
                             [whereKey appendFormat:@"OR %@=? ",key];
                         }
@@ -291,7 +305,7 @@
             }
             else
             {
-                if(whereKey.length > 0)
+                if (whereKey.length > 0)
                 {
                     [whereKey appendFormat:@"AND %@=? ",key];
                 }
@@ -318,11 +332,11 @@
  */
 - (void)sqlString:(NSMutableString *)sql AddOder:(NSString *)orderby offset:(int)offset count:(int)count
 {
-    if (!sql || !count){
+    if (!sql || !count) {
         return ;
     }
     
-    if(orderby != nil && ![orderby isEmptyWithTrim])
+    if (orderby != nil && ![orderby isEmptyWithTrim])
     {
         [sql appendFormat:@"ORDER BY %@ ",orderby];
     }
@@ -336,7 +350,7 @@
  *  @param setValues 要更新的值,例:@[@"Jay", @18]
  *  @param model        model
  */
-- (void)createSetKey:(NSMutableString *)setKey andSetValues:(NSMutableArray *)setValues withModel:(JJBaseDBModel *)model
+- (void)createSetKey:(NSMutableString *)setKey andSetValues:(NSMutableArray *)setValues withModel:(NSObject *)model
 {
     
     for (int i=0; i<self.columeNames.count; i++) {
@@ -351,7 +365,7 @@
         [setValues addObject:value];
     }
     
-    if (setKey.length > 0){
+    if (setKey.length > 0) {
         [setKey deleteCharactersInRange:NSMakeRange(setKey.length - 1, 1)];
     }
     
@@ -369,7 +383,7 @@
 {
     
     NSArray *keyArr = setDic.allKeys;
-    for (NSInteger i=0; i<keyArr.count; i++){
+    for (NSInteger i=0; i<keyArr.count; i++) {
         NSString *key = [keyArr objectAtIndex:i];
         id value = [setDic objectForKey:key];
         
@@ -381,7 +395,7 @@
         
     }
     
-    if (setKey.length > 0){
+    if (setKey.length > 0) {
         [setKey deleteCharactersInRange:NSMakeRange(setKey.length - 1, 1)];
     }
 }
@@ -398,7 +412,7 @@
 - (void)createInsertKey:(NSMutableString *)insertKey
      andInsertValuesStr:(NSMutableString *)insertValuesStr
         andinsertValues:(NSMutableArray *)insertValues
-              withModel:(JJBaseDBModel *)model
+              withModel:(NSObject *)model
 {
     for (int i=0; i<self.columeNames.count; i++) {
         
@@ -412,11 +426,11 @@
         [insertValues addObject:value];
     }
     
-    if (insertKey.length > 0){
+    if (insertKey.length > 0) {
         [insertKey deleteCharactersInRange:NSMakeRange(insertKey.length - 1, 1)];
     }
     
-    if (insertValuesStr.length > 0){
+    if (insertValuesStr.length > 0) {
         [insertValuesStr deleteCharactersInRange:NSMakeRange(insertValuesStr.length - 1, 1)];
     }
     
@@ -426,15 +440,15 @@
 
 
 #pragma mark - Table
-
+/** 创建表 */
 - (void)createTable
 {
-    if([[self.class getTableName] isEmptyWithTrim]) {
+    if ([[self.class getTableName] isEmptyWithTrim]) {
         NSLog(@"TableName is None!");
         return;
     }
     
-    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db){
+    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db) {
         NSString *createTableSql = [NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,%@)",[self.class getTableName],[self appendTableSql]];
         [db executeUpdate:createTableSql];
     }];
@@ -442,7 +456,7 @@
 
 
 - (void)tableAddColumn:(NSString *)column type:(NSString *)type callback:(void (^)(BOOL))block {
-    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db){
+    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db) {
         
         NSString *updateTableSql = [NSString stringWithFormat:@"ALTER TABLE %@ ADD COLUMN %@ %@",[self.class getTableName], column, type];
         
@@ -456,7 +470,7 @@
 
 //SQLite不支持删除列
 - (void)tableDropColumn:(NSString *)column callback:(void (^)(BOOL))block {
-    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db){
+    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db) {
         
         NSString *updateTableSql = [NSString stringWithFormat:@"ALTER TABLE %@ DROP COLUMN %@",[self.class getTableName], column];
         
@@ -480,7 +494,7 @@
 
 
 - (void)readTableColumns:(void (^)(NSArray *))block {
-    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db){
+    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db) {
         
         NSMutableString *searchSql = [NSMutableString stringWithFormat:@"PRAGMA TABLE_INFO(%@)",[self.class getTableName]];
         
@@ -512,7 +526,7 @@
     
     while ([set next]) {
         
-        JJBaseDBModel *model = [[[self.class getBindingModelClass] alloc] init];
+        NSObject *model = [[[self.class getBindingModelClass] alloc] init];
         model.rowid = [set intForColumnIndex:0];
         
         for (int i=0; i<self.columeNames.count; i++) {
@@ -527,7 +541,7 @@
     }
     [set close];
     
-    if (block){
+    if (block) {
         block(array);
     }
     
@@ -536,7 +550,7 @@
 
 - (void)searchCount:(void(^)(int))block
 {
-    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db){
+    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db) {
         
         NSMutableString *searchSql = [NSMutableString stringWithFormat:@"SELECT count(*) FROM %@",[self.class getTableName]];
         
@@ -549,7 +563,7 @@
         }
         [set close];
         
-        if (block){
+        if (block) {
             block(count);
         }
         
@@ -606,10 +620,10 @@
 
 - (void)searchWhere:(NSString *)where orderBy:(NSString *)orderBy offset:(int)offset count:(int)count callback:(void (^)(NSArray *))block
 {
-    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db){
+    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db) {
         
         NSMutableString *searchSql = [NSMutableString stringWithFormat:@"SELECT * FROM %@ ",[self.class getTableName]];
-        if(where != nil && ![where isEmptyWithTrim])
+        if (where != nil && ![where isEmptyWithTrim])
         {
             [searchSql appendFormat:@"WHERE %@ ",where];
         }
@@ -633,12 +647,12 @@
 
 - (void)searchWhereDic:(NSDictionary *)whereDic orderBy:(NSString *)orderby offset:(int)offset count:(int)count callback:(void (^)(NSArray *))block
 {
-    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db){
+    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db) {
         NSMutableString *query = [NSMutableString stringWithFormat:@"SELECT * FROM %@ ",[self.class getTableName]];
         
         NSMutableArray *values = [NSMutableArray arrayWithCapacity:0];
         
-        if(whereDic !=nil && whereDic.count>0)
+        if (whereDic !=nil && whereDic.count>0)
         {
             NSString *whereKey = [self dictionaryToSqlWhere:whereDic andValues:values];
             [query appendFormat:@"WHERE %@ ",whereKey];
@@ -653,7 +667,7 @@
 
 #pragma mark - Insert
 
-- (void)executeInsertToDB:(JJBaseDBModel *)model withDatabase:(FMDatabase *)db callback:(void (^)(BOOL))block
+- (void)executeInsertToDB:(NSObject *)model withDatabase:(FMDatabase *)db callback:(void (^)(BOOL))block
 {
     //    NSLog(@"=========================");
     //    NSLog(@"开始插入数据");
@@ -667,31 +681,31 @@
     BOOL execute = [db executeUpdate:insertSQL withArgumentsInArray:insertValues];
     model.rowid = db.lastInsertRowId;
     
-    if(block != nil){
+    if (block != nil) {
         block(execute);
     }
     
-    if(execute == NO){
+    if (execute == NO) {
         NSLog(@"database insert fail %@",NSStringFromClass(model.class));
     }
 }
 
 #pragma mark Insert model
 
-- (void)insertToDB:(JJBaseDBModel *)model callback:(void (^)(BOOL))block{
+- (void)insertToDB:(NSObject *)model callback:(void (^)(BOOL))block{
     
-    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db){
+    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db) {
         [self executeInsertToDB:model withDatabase:db callback:block];
     }];
 }
 
 
 
-- (void)insertToDBNotExistsOrUpdate:(JJBaseDBModel *)model callback:(void (^)(BOOL))block{
+- (void)insertToDBNotExistsOrUpdate:(NSObject *)model callback:(void (^)(BOOL))block{
     
-    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db){
+    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db) {
         BOOL isExists = [self executeIsExistsModel:model withDatabase:db callback:nil];
-        if (isExists){
+        if (isExists) {
             [self executeUpdateToDB:model withDatabase:db callback:block];
         }
         else{
@@ -703,11 +717,11 @@
 
 #pragma mark Insert 自定义Where
 
-- (void)insertToDBNotExistsOrUpdate:(JJBaseDBModel *)model WithWhere:(NSString *)where callback:(void (^)(BOOL))block{
+- (void)insertToDBNotExistsOrUpdate:(NSObject *)model WithWhere:(NSString *)where callback:(void (^)(BOOL))block{
     
-    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db){
+    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db) {
         BOOL isExists = [self executeIsExistsModelWithWhere:where withDatabase:db callback:nil];
-        if (isExists){
+        if (isExists) {
             [self executeUpdateToDB:model withDatabase:db withWhere:where callback:block];
         }
         else{
@@ -717,11 +731,11 @@
     }];
 }
 
-- (void)insertToDBNotExistsOrUpdate:(JJBaseDBModel *)model withUpdateKey:(NSString *)updateKey withWhere:(NSString *)where callback:(void (^)(BOOL))block{
+- (void)insertToDBNotExistsOrUpdate:(NSObject *)model withUpdateKey:(NSString *)updateKey withWhere:(NSString *)where callback:(void (^)(BOOL))block{
     
-    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db){
+    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db) {
         BOOL isExists = [self executeIsExistsModelWithWhere:where withDatabase:db callback:nil];
-        if (isExists){
+        if (isExists) {
             [self executeUpdateToDBWithUpdateKey:updateKey withDatabase:db withWhere:where callback:block];
         }
         else{
@@ -733,11 +747,11 @@
 
 #pragma mark Insert key-value
 
-- (void)insertToDBNotExistsOrUpdate:(JJBaseDBModel *)model WithWhereDic:(NSDictionary *)whereDic callback:(void (^)(BOOL))block{
+- (void)insertToDBNotExistsOrUpdate:(NSObject *)model WithWhereDic:(NSDictionary *)whereDic callback:(void (^)(BOOL))block{
     
-    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db){
+    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db) {
         BOOL isExists = [self executeIsExistsModelWithWhereDic:whereDic withDatabase:db callback:block];
-        if (isExists){
+        if (isExists) {
             [self executeUpdateToDB:model withDatabase:db withWhereDic:whereDic callback:block];
         }
         else{
@@ -747,11 +761,11 @@
     }];
 }
 
-- (void)insertToDBNotExistsOrUpdate:(JJBaseDBModel *)model withUpdateKey:(NSDictionary *)updateKeyDic withWhereDic:(NSDictionary *)whereDic callback:(void (^)(BOOL))block{
+- (void)insertToDBNotExistsOrUpdate:(NSObject *)model withUpdateKey:(NSDictionary *)updateKeyDic withWhereDic:(NSDictionary *)whereDic callback:(void (^)(BOOL))block{
     
-    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db){
+    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db) {
         BOOL isExists = [self executeIsExistsModelWithWhereDic:whereDic withDatabase:db callback:block];
-        if (isExists){
+        if (isExists) {
             [self executeUpdateToDBWithDatabase:db orUpdateKeyDic:updateKeyDic withWhereDic:whereDic callback:block];
         }
         else{
@@ -767,12 +781,12 @@
 
 #pragma mark - Update
 
-- (void)executeUpdateToDB:(JJBaseDBModel *)model withDatabase:(FMDatabase *)db callback:(void (^)(BOOL))block
+- (void)executeUpdateToDB:(NSObject *)model withDatabase:(FMDatabase *)db callback:(void (^)(BOOL))block
 {
     [self executeUpdateToDB:model withDatabase:db withWhere:nil callback:block];
 }
 
-- (void)executeUpdateToDB:(JJBaseDBModel *)model withDatabase:(FMDatabase *)db withWhere:(NSString *)where callback:(void (^)(BOOL))block
+- (void)executeUpdateToDB:(NSObject *)model withDatabase:(FMDatabase *)db withWhere:(NSString *)where callback:(void (^)(BOOL))block
 {
     NSMutableString *updateKey = [NSMutableString stringWithCapacity:0];
     
@@ -782,19 +796,20 @@
     [self createSetKey:updateKey andSetValues:updateValues withModel:model];
     
     NSString *updateSql = nil;
-    if (where){
+    if (where) {
         updateSql = [NSString stringWithFormat:@"UPDATE %@ SET %@ WHERE %@", [self.class getTableName], updateKey, where];
     }
     else{
         //通过rowid来更新数据
-        if(model.rowid > 0){
+        if (model.rowid > 0) {
             updateSql = [NSString stringWithFormat:@"UPDATE %@ SET %@ WHERE rowid=%lld",[self.class getTableName],updateKey,model.rowid];
         }
         else{
-            if (!model.primaryKey){
-                if(block){
+            if (!model.primaryKey) {
+                if (block) {
                     block(NO);
                 }
+                return ;
             }
             
             //通过primarykey来更新数据
@@ -806,7 +821,7 @@
     
     BOOL execute = [db executeUpdate:updateSql withArgumentsInArray:updateValues];
     
-    if(block){
+    if (block) {
         block(execute);
     }
 }
@@ -818,13 +833,13 @@
     
     BOOL execute = [db executeUpdate:updateSql];
     
-    if(block){
+    if (block) {
         block(execute);
     }
 }
 
 
-- (void)executeUpdateToDB:(JJBaseDBModel *)model withDatabase:(FMDatabase *)db withWhereDic:(NSDictionary *)whereDic callback:(void (^)(BOOL))block
+- (void)executeUpdateToDB:(NSObject *)model withDatabase:(FMDatabase *)db withWhereDic:(NSDictionary *)whereDic callback:(void (^)(BOOL))block
 {
     [self executeUpdateToDB:model withDatabase:db orUpdateKeyDic:nil withWhereDic:whereDic callback:block];
 }
@@ -834,24 +849,24 @@
     [self executeUpdateToDB:nil withDatabase:db orUpdateKeyDic:updateKeyDic withWhereDic:whereDic callback:block];
 }
 
-- (void)executeUpdateToDB:(JJBaseDBModel *)model withDatabase:(FMDatabase *)db orUpdateKeyDic:(NSDictionary *)updateKeyDic withWhereDic:(NSDictionary *)whereDic callback:(void (^)(BOOL))block
+- (void)executeUpdateToDB:(NSObject *)model withDatabase:(FMDatabase *)db orUpdateKeyDic:(NSDictionary *)updateKeyDic withWhereDic:(NSDictionary *)whereDic callback:(void (^)(BOOL))block
 {
     NSMutableString *setKey = [NSMutableString stringWithCapacity:0];
     
     NSMutableArray *setValues = [NSMutableArray arrayWithCapacity:0];
     
     //创建updateKey 和 UpdateValues
-    if (model){
+    if (model) {
         [self createSetKey:setKey andSetValues:setValues withModel:model];
     }
-    else if (updateKeyDic && updateKeyDic.count){
+    else if (updateKeyDic && updateKeyDic.count) {
         [self createSetKey:setKey andSetValues:setValues withupdateKeyDic:updateKeyDic];
     }
     
     
     NSString *updateSql = [NSString string];
     
-    if(whereDic && whereDic.count)
+    if (whereDic && whereDic.count)
     {
         //whereDic对应的值继续放在updateValues里面,只要?和value对应
         NSString *where = [self dictionaryToSqlWhere:whereDic andValues:setValues];
@@ -860,32 +875,32 @@
     
     BOOL execute = [db executeUpdate:updateSql withArgumentsInArray:setValues];
     
-    if(block){
+    if (block) {
         block(execute);
     }
 }
 
 #pragma mark Update model
 
-- (void)updateToDB:(JJBaseDBModel *)model callback:(void (^)(BOOL))block
+- (void)updateToDB:(NSObject *)model callback:(void (^)(BOOL))block
 {
-    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db){
+    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db) {
         [self executeUpdateToDB:model withDatabase:db callback:block];
     }];
 }
 
 #pragma mark Update 自定义Where
 
-- (void)updateToDB:(JJBaseDBModel *)model withWhere:(NSString *)where callback:(void (^)(BOOL))block
+- (void)updateToDB:(NSObject *)model withWhere:(NSString *)where callback:(void (^)(BOOL))block
 {
-    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db){
+    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db) {
         [self executeUpdateToDB:model withDatabase:db withWhere:where callback:block];
     }];
 }
 
 - (void)updateToDBWithUpdateKey:(NSString *)updateKey withWhere:(NSString *)where callback:(void (^)(BOOL))block
 {
-    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db){
+    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db) {
         [self executeUpdateToDBWithUpdateKey:updateKey withDatabase:db withWhere:where callback:block];
     }];
 }
@@ -894,24 +909,24 @@
 
 #pragma mark Update key-value
 
-- (void)updateToDB:(JJBaseDBModel *)model withWhereDic:(NSDictionary *)whereDic callback:(void (^)(BOOL))block
+- (void)updateToDB:(NSObject *)model withWhereDic:(NSDictionary *)whereDic callback:(void (^)(BOOL))block
 {
-    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db){
+    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db) {
         [self executeUpdateToDB:model withDatabase:db withWhereDic:whereDic callback:block];
     }];
 }
 
 - (void)updateToDBWithUpdateKey:(NSDictionary *)UpdateKeyDic withWhereDic:(NSDictionary *)whereDic callback:(void (^)(BOOL))block
 {
-    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db){
+    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db) {
         [self executeUpdateToDBWithDatabase:db orUpdateKeyDic:UpdateKeyDic withWhereDic:whereDic callback:block];
     }];
 }
 
 
-- (void)updateToDB:(JJBaseDBModel *)model orUpdateKey:(NSDictionary *)updateKeyDic withWhereDic:(NSDictionary *)whereDic callback:(void (^)(BOOL))block
+- (void)updateToDB:(NSObject *)model orUpdateKey:(NSDictionary *)updateKeyDic withWhereDic:(NSDictionary *)whereDic callback:(void (^)(BOOL))block
 {
-    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db){
+    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db) {
         [self executeUpdateToDB:model withDatabase:db orUpdateKeyDic:updateKeyDic withWhereDic:whereDic callback:block];
     }];
 }
@@ -922,29 +937,27 @@
 
 #pragma mark - Delete
 
-- (void)deleteToDB:(JJBaseDBModel *)model callback:(void (^)(BOOL))block{
+- (void)deleteToDB:(NSObject *)model callback:(void (^)(BOOL))block{
     
-    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db){
+    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db) {
         NSString *deleteSql = nil;
         BOOL result = NO;
-        if(model.rowid > 0)
-        {
+        if (model.rowid > 0) {
             deleteSql = [NSString stringWithFormat:@"DELETE FROM %@ WHERE rowid=%lld",[self.class getTableName],model.rowid];
             result = [db executeUpdate:deleteSql];
         }
-        else{
-            
-            if (!model.primaryKey){
-                if(block){
+        else {
+            if (!model.primaryKey) {
+                if (block) {
                     block(result);
                 }
+                return ;
             }
-            
             deleteSql = [NSString stringWithFormat:@"DELETE FROM %@ WHERE %@=?",[self.class getTableName],model.primaryKey];
             result = [db executeUpdate:deleteSql, [model valueForKey:model.primaryKey]];
         }
         
-        if(block != nil){
+        if (block != nil) {
             block(result);
         }
         
@@ -953,10 +966,10 @@
 
 - (void)deleteToDBWithWhere:(NSString *)where callback:(void (^)(BOOL))block
 {
-    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db){
+    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db) {
         NSString *deleteSql = [NSString stringWithFormat:@"DELETE FROM %@ WHERE %@",[self.class getTableName],where];
         BOOL result = [db executeUpdate:deleteSql];
-        if(block != nil)
+        if (block != nil)
         {
             block(result);
         }
@@ -966,7 +979,7 @@
 
 - (void)deleteToDBWithWhereDic:(NSDictionary *)where callback:(void (^)(BOOL))block
 {
-    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db){
+    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db) {
         
         NSMutableArray *values = [NSMutableArray arrayWithCapacity:0];
         
@@ -975,7 +988,7 @@
         
         BOOL result = [db executeUpdate:deleteSql withArgumentsInArray:values];
         
-        if(block != nil){
+        if (block != nil) {
             block(result);
         }
     }];
@@ -983,11 +996,11 @@
 
 - (void)clearTableWithCallback:(void (^)(BOOL))block
 {
-    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db){
+    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db) {
         NSString *delete = [NSString stringWithFormat:@"DELETE FROM %@",[self.class getTableName]];
         BOOL result = [db executeUpdate:delete];
         
-        if(block != nil){
+        if (block != nil) {
             block(result);
         }
     }];
@@ -995,10 +1008,10 @@
 
 #pragma mark - isExist
 
-- (BOOL)executeIsExistsModel:(JJBaseDBModel *)model withDatabase:(FMDatabase *)db callback:(void (^)(BOOL))block
+- (BOOL)executeIsExistsModel:(NSObject *)model withDatabase:(FMDatabase *)db callback:(void (^)(BOOL))block
 {
-    if (!model.primaryKey){
-        if(block){
+    if (!model.primaryKey) {
+        if (block) {
             block(NO);
         }
         return NO;
@@ -1023,7 +1036,7 @@
     
     [resultSet close];
     
-    if(block){
+    if (block) {
         block(isExists);
     }
     
@@ -1042,7 +1055,7 @@
     
     [resultSet close];
     
-    if(block != nil){
+    if (block != nil) {
         block(isExists);
     }
     
@@ -1050,7 +1063,7 @@
 }
 
 
-- (void)isExistsModel:(JJBaseDBModel *)model callback:(void(^)(BOOL))block{
+- (void)isExistsModel:(NSObject *)model callback:(void(^)(BOOL))block{
     
     [self.bindingQueue inDatabaseAsync:^(FMDatabase *db) {
         [self executeIsExistsModel:model withDatabase:db callback:block];
@@ -1059,7 +1072,7 @@
 
 - (void)isExistsModelWithWhere:(NSString *)where callback:(void (^)(BOOL))block
 {
-    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db){
+    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db) {
         [self executeIsExistsModelWithWhere:where withDatabase:db callback:block];
     }];
 }
@@ -1067,7 +1080,7 @@
 
 - (void)isExistsModelWithWhereDic:(NSDictionary *)whereDic callback:(void (^)(BOOL))block
 {
-    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db){
+    [self.bindingQueue inDatabaseAsync:^(FMDatabase *db) {
         
         [self executeIsExistsModelWithWhereDic:whereDic withDatabase:db callback:block];
     }];
@@ -1082,6 +1095,10 @@ static char *kBindingQueueKey;
 
 - (JJDatabaseQueue *)bindingQueue {
     JJDatabaseQueue *queue = objc_getAssociatedObject(self, &kBindingQueueKey);
+    if (!queue) {
+        queue = [[JJDatabaseQueue alloc] initWithPath:[self getDataBasePath]];
+        objc_setAssociatedObject(self, &kBindingQueueKey, queue, OBJC_ASSOCIATION_RETAIN);
+    }
     return queue;
 }
 

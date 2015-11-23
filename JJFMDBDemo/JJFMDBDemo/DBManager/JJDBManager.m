@@ -13,9 +13,6 @@
 
 @interface JJDBManager ()
 
-/** 数据库操作队列 */
-@property (nonatomic, strong) JJDatabaseQueue *dbQueue;
-
 /** 数据库的Operate */
 @property (nonatomic, strong) JJDogDBOperate *dogDBOperate;
 
@@ -39,7 +36,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        [self createDataBase];
+        
     }
     return self;
 }
@@ -51,11 +48,6 @@
 {
     //数据库名称
     return [JJSandBox getPathForDocuments:[NSString stringWithFormat:@"database.db"] inDir:@"DataBase"];
-}
-
-/** 创建数据库 */
-- (void)createDataBase {
-    self.dbQueue = [[JJDatabaseQueue alloc] initWithPath:[self getDataBasePath]];
 }
 
 #pragma mark - Public Methods
@@ -102,19 +94,17 @@
 
 
 #pragma mark - Property
-- (JJDatabaseQueue *)dbQueue {
-    if (_dbQueue) {
-        return _dbQueue;
-    }
-    _dbQueue = [[JJDatabaseQueue alloc] initWithPath:[self getDataBasePath]];
-    return _dbQueue;
-}
 
 - (JJDogDBOperate *)dogDBOperate {
     if (_dogDBOperate) {
         return _dogDBOperate;
     }
-    _dogDBOperate = [[JJDogDBOperate alloc] initWithDBQueue:self.dbQueue];
+#if 0
+    JJDatabaseQueue *queue = [[JJDatabaseQueue alloc] initWithPath:[self getDataBasePath]];
+    _dogDBOperate = [[JJDogDBOperate alloc] initWithDBQueue:queue];
+#else
+    _dogDBOperate = [[JJDogDBOperate alloc] init];
+#endif
     return _dogDBOperate;
 }
 @end

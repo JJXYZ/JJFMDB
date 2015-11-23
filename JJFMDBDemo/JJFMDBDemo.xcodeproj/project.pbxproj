@@ -19,12 +19,12 @@
 		69B0D2EB1BF9FA6700DAE25B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69B0D2E91BF9FA6700DAE25B /* LaunchScreen.storyboard */; };
 		69B0D2F61BF9FA6700DAE25B /* JJFMDBDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B0D2F51BF9FA6700DAE25B /* JJFMDBDemoTests.m */; };
 		69B0D3011BF9FA6700DAE25B /* JJFMDBDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B0D3001BF9FA6700DAE25B /* JJFMDBDemoUITests.m */; };
-		69B0D3141BF9FE0A00DAE25B /* JJBaseDBModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B0D3131BF9FE0A00DAE25B /* JJBaseDBModel.m */; };
 		69B0D3171BF9FF3300DAE25B /* JJBaseDBOperate.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B0D3161BF9FF3300DAE25B /* JJBaseDBOperate.m */; };
 		69B0D31A1BFA010300DAE25B /* JJDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B0D3191BFA010300DAE25B /* JJDatabaseQueue.m */; };
 		69B0D31D1BFA060600DAE25B /* NSObject+JJFMDBPropertys.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B0D31C1BFA060600DAE25B /* NSObject+JJFMDBPropertys.m */; };
 		69B0D3201BFA081100DAE25B /* NSDate+JJFMDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B0D31F1BFA081100DAE25B /* NSDate+JJFMDB.m */; };
 		69B0D3231BFA0AC900DAE25B /* NSString+JJFMDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B0D3221BFA0AC900DAE25B /* NSString+JJFMDB.m */; };
+		69FA2DA81C02FAD100B073EB /* NSObject+JJDBObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 69FA2DA71C02FAD100B073EB /* NSObject+JJDBObject.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,8 +68,6 @@
 		69B0D2FC1BF9FA6700DAE25B /* JJFMDBDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JJFMDBDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		69B0D3001BF9FA6700DAE25B /* JJFMDBDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JJFMDBDemoUITests.m; sourceTree = "<group>"; };
 		69B0D3021BF9FA6700DAE25B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		69B0D3121BF9FE0A00DAE25B /* JJBaseDBModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JJBaseDBModel.h; sourceTree = "<group>"; };
-		69B0D3131BF9FE0A00DAE25B /* JJBaseDBModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JJBaseDBModel.m; sourceTree = "<group>"; };
 		69B0D3151BF9FF3300DAE25B /* JJBaseDBOperate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JJBaseDBOperate.h; sourceTree = "<group>"; };
 		69B0D3161BF9FF3300DAE25B /* JJBaseDBOperate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JJBaseDBOperate.m; sourceTree = "<group>"; };
 		69B0D3181BFA010300DAE25B /* JJDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JJDatabaseQueue.h; sourceTree = "<group>"; };
@@ -80,6 +78,8 @@
 		69B0D31F1BFA081100DAE25B /* NSDate+JJFMDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+JJFMDB.m"; sourceTree = "<group>"; };
 		69B0D3211BFA0AC900DAE25B /* NSString+JJFMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+JJFMDB.h"; sourceTree = "<group>"; };
 		69B0D3221BFA0AC900DAE25B /* NSString+JJFMDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+JJFMDB.m"; sourceTree = "<group>"; };
+		69FA2DA61C02FAD100B073EB /* NSObject+JJDBObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+JJDBObject.h"; sourceTree = "<group>"; };
+		69FA2DA71C02FAD100B073EB /* NSObject+JJDBObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+JJDBObject.m"; sourceTree = "<group>"; };
 		7521FBF6585E588DD634012A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		7B75369E0C06767B58DE0459 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -208,8 +208,6 @@
 		69B0D30F1BF9FDE600DAE25B /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				69B0D3121BF9FE0A00DAE25B /* JJBaseDBModel.h */,
-				69B0D3131BF9FE0A00DAE25B /* JJBaseDBModel.m */,
 				69B0D3151BF9FF3300DAE25B /* JJBaseDBOperate.h */,
 				69B0D3161BF9FF3300DAE25B /* JJBaseDBOperate.m */,
 				693304661BFB784B00F8B3E0 /* JJBaseDBOperate+Methods.h */,
@@ -223,6 +221,8 @@
 		69B0D3101BF9FDE600DAE25B /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				69FA2DA61C02FAD100B073EB /* NSObject+JJDBObject.h */,
+				69FA2DA71C02FAD100B073EB /* NSObject+JJDBObject.m */,
 				69B0D31B1BFA060600DAE25B /* NSObject+JJFMDBPropertys.h */,
 				69B0D31C1BFA060600DAE25B /* NSObject+JJFMDBPropertys.m */,
 				69B0D31E1BFA081100DAE25B /* NSDate+JJFMDB.h */,
@@ -418,11 +418,11 @@
 			files = (
 				693304621BFB5C8700F8B3E0 /* JJDBManager.m in Sources */,
 				6933045E1BFB56EE00F8B3E0 /* JJDogDBModel.m in Sources */,
-				69B0D3141BF9FE0A00DAE25B /* JJBaseDBModel.m in Sources */,
 				69B0D3201BFA081100DAE25B /* NSDate+JJFMDB.m in Sources */,
 				69B0D3231BFA0AC900DAE25B /* NSString+JJFMDB.m in Sources */,
 				69B0D2E31BF9FA6700DAE25B /* ViewController.m in Sources */,
 				69B0D3171BF9FF3300DAE25B /* JJBaseDBOperate.m in Sources */,
+				69FA2DA81C02FAD100B073EB /* NSObject+JJDBObject.m in Sources */,
 				69B0D2E01BF9FA6700DAE25B /* AppDelegate.m in Sources */,
 				693304681BFB784B00F8B3E0 /* JJBaseDBOperate+Methods.m in Sources */,
 				69B0D31A1BFA010300DAE25B /* JJDatabaseQueue.m in Sources */,

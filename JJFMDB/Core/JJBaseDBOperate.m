@@ -7,18 +7,17 @@
 //
 
 #import "JJBaseDBOperate.h"
-#import "JJBaseDBModel.h"
 
 @implementation JJBaseDBOperate
 
-+ (const NSString *)getTableName
-{
++ (const NSString *)getTableName {
+    NSCAssert(NO, @"子类必须重载方法 %s",__FUNCTION__);
     return @"base_table";
 }
 
-+ (Class)getBindingModelClass
-{
-    return [JJBaseDBModel class];
++ (Class)getBindingModelClass {
+    NSCAssert(NO, @"子类必须重载方法 %s",__FUNCTION__);
+    return nil;
 }
 
 

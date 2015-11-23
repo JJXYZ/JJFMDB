@@ -8,7 +8,6 @@
 
 #import "NSObject+JJFMDBPropertys.h"
 #import <objc/runtime.h>
-#import "JJBaseDBModel.h"
 
 @implementation NSObject (JJFMDBPropertys)
 
@@ -69,7 +68,6 @@
     free(properties);
     
     if(isGetSuper &&
-       ([self superclass] != [JJBaseDBModel class]) &&
        ([self superclass] != [NSObject class]))
     {
         

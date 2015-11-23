@@ -6,7 +6,7 @@
 //  Copyright © 2015年 JJ. All rights reserved.
 //
 
-#import "JJBaseDBModel.h"
+
 #import "JJBaseDBOperate.h"
 #import <UIKit/UIKit.h>
 
@@ -14,7 +14,7 @@
 
 @end
 
-@interface JJDogDBModel : JJBaseDBModel
+@interface JJDogDBModel : NSObject
 
 @property (nonatomic, strong) NSString *name;
 
