@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|  
   s.name             = "JJFMDB"
-  s.version          = "1.0.4"
-  s.summary          = "A Tool used on iOS."  
+  s.version          = "2.0.0"
+  s.summary          = "A SQLite Tool used on iOS."  
   s.description      = <<-DESC  
                        封装FMDB,使开发者远离SQL语句.
                        DESC
