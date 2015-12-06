@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
   s.version          = "2.0.0"
   s.summary          = "A SQLite Tool used on iOS."  
   s.description      = <<-DESC  
-                       封装FMDB,使开发者远离SQL语句.
+                       封装FMDB,数据Model直接写入数据库，开发者不需要写任何SQL语句。
                        DESC
 
   s.homepage         = "https://github.com/JayJJ/JJFMDB"
