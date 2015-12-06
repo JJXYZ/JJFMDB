@@ -3,9 +3,9 @@
 
 # 使用方法
 
-* 1.Operate继承于JJBaseDBOperate
-* 2.重写JJBaseDBOperate的getBindingModelClass和getTableName方法
-* 3.调用JJBaseDBOperate+Methods的方法读写数据库
-
+* 1.引入头文件JJFMDB.h
+* 2.调用NSObject+JJFMDBMethods的方法即可操作数据库
 
 注意:支持的类型,NSString,NSNumber,NSInteger,char,int,short,long long,float,CGFloat,BOOL,NSData,UIImage
+
+PS:部分方法copy自MJExtention框架，表示非常感谢
