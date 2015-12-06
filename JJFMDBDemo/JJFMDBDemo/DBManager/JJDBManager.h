@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "JJDogDBModel.h"
+#import "JJDog.h"
+#import "JJCat.h"
 
 typedef void (^DBSuccessBlock)(BOOL isSuccess);
 typedef void (^DBSearchResults)(NSArray *modelArr);
@@ -21,14 +22,14 @@ typedef void (^DBSearchResults)(NSArray *modelArr);
  *
  *  @param model
  */
-- (void)insertToDB:(JJDogDBModel *)model callback:(DBSuccessBlock)block;
+- (void)insertToDB:(JJDog *)model callback:(DBSuccessBlock)block;
 
 /**
  *  删除数据
  *
  *  @param model
  */
-- (void)deleteToDB:(JJDogDBModel *)model callback:(DBSuccessBlock)block;
+- (void)deleteToDB:(JJDog *)model callback:(DBSuccessBlock)block;
 
 /**
  *  查询数据

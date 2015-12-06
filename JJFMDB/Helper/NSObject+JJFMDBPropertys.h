@@ -8,22 +8,27 @@
 
 #import <Foundation/Foundation.h>
 
+@class JJFMDBProperty;
+
+/**
+ *  遍历成员变量用的block
+ *
+ *  @param property 成员的包装对象
+ *  @param stop   YES代表停止遍历，NO代表继续遍历
+ */
+typedef void(^JJFMDBPropertysEnumeration)(JJFMDBProperty *property, BOOL *stop);
+
 @interface NSObject (JJFMDBPropertys)
 
 /**
- *  返回该类的所有属性,不上溯到父类,
- *  value-key:pronames - @"name", protypes - @"type"
- *
- *  @return 该类的所有属性
+ *  遍历所有的成员
  */
-+ (NSDictionary *)getPropertys;
++ (void)enumerateProperties:(JJFMDBPropertysEnumeration)enumeration;
 
 /**
- *  返回 该类以及父类的所有属性
- *
- *  @return 该类以及父类的所有属性
+ *  成员变量转换成JJFMDBProperty数组
  */
-+ (NSDictionary *)getPropertysWithSuper;
++ (NSMutableArray *)properties;
 
 
 @end

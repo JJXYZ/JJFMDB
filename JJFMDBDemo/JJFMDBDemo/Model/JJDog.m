@@ -6,23 +6,10 @@
 //  Copyright © 2015年 JJ. All rights reserved.
 //
 
-#import "JJDogDBModel.h"
+#import "JJDog.h"
+#import "JJFMDB.h"
 
-@implementation JJDogDBOperate
-
-/** 注意:这里返回的是DBModel类名 */
-+ (Class)getBindingModelClass {
-    return [JJDogDBModel class];
-}
-
-/** 表名 */
-+ (const NSString *)getTableName {
-    return @"dog_table";
-}
-
-@end
-
-@implementation JJDogDBModel
+@implementation JJDog
 
 #pragma mark - Lifecycle
 
@@ -53,11 +40,18 @@
     return self;
 }
 
-#pragma mark - Private Methods
+#pragma mark - JJFMDBProtocol
 
-+ (Class)getBindingOperateClass
-{
-    return [JJDogDBOperate class];
+#if 1
+/** 返回表名 */
++ (const NSString *)jj_tableName {
+    return @"dogs";
 }
+
+/** 返回数据库路径 */
++ (NSString *)jj_databasePath {
+    return [JJSandBox getPathForDocuments:[NSString stringWithFormat:@"dog.db"] inDir:@"DataBase"];
+}
+#endif
 
 @end

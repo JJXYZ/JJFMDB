@@ -7,14 +7,10 @@
 //
 
 
-#import "JJBaseDBOperate.h"
 #import <UIKit/UIKit.h>
 
-@interface JJDogDBOperate : JJBaseDBOperate
 
-@end
-
-@interface JJDogDBModel : NSObject
+@interface JJDog : NSObject
 
 @property (nonatomic, strong) NSString *name;
 

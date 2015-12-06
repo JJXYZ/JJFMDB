@@ -1,15 +1,15 @@
 //
-//  NSObject+JJDBObject.m
+//  NSObject+JJFMDBObject.m
 //  JJFMDBDemo
 //
-//  Created by Jay on 15/11/23.
+//  Created by Jay on 15/12/6.
 //  Copyright © 2015年 JJ. All rights reserved.
 //
 
-#import "NSObject+JJDBObject.h"
+#import "NSObject+JJFMDBObject.h"
 #import <objc/runtime.h>
 
-@implementation NSObject (JJDBObject)
+@implementation NSObject (JJFMDBObject)
 
 #pragma mark - Property
 

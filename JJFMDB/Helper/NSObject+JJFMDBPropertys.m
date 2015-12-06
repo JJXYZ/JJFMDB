@@ -7,128 +7,73 @@
 //
 
 #import "NSObject+JJFMDBPropertys.h"
+
+/** system */
 #import <objc/runtime.h>
+
+/** Helper */
+#import "JJFMDBProperty.h"
+#import "JJFMDBPropertyCache.h"
+#import "NSObject+JJFMDBClass.h"
+
+static const char JJCachedPropertiesKey = '\0';
 
 @implementation NSObject (JJFMDBPropertys)
 
-#pragma mark - Private Methods
 
-+ (NSDictionary *)getPropertys
+#pragma mark - Public Methods
+/**
+ *  遍历所有的成员
+ */
++ (void)enumerateProperties:(JJFMDBPropertysEnumeration)enumeration
 {
-    NSMutableArray *pronames = [NSMutableArray array];
-    NSMutableArray *protypes = [NSMutableArray array];
-    NSDictionary *props = [NSDictionary dictionaryWithObjectsAndKeys:pronames,@"name",protypes,@"type",nil];
-    [self getSelfPropertys:pronames protypes:protypes isGetSuper:NO];
-    return props;
-}
-
-+ (NSDictionary *)getPropertysWithSuper
-{
-    NSMutableArray *pronames = [NSMutableArray array];
-    NSMutableArray *protypes = [NSMutableArray array];
-    NSDictionary *props = [NSDictionary dictionaryWithObjectsAndKeys:pronames,@"name",protypes,@"type",nil];
-    [self getSelfPropertys:pronames protypes:protypes isGetSuper:YES];
-    return props;
-}
-
-
-
-+ (void)getSelfPropertys:(NSMutableArray *)pronames protypes:(NSMutableArray *)protypes isGetSuper:(BOOL)isGetSuper {
+    // 获得成员变量
+    NSArray *cachedProperties = [self properties];
     
-//    NSLog(@"[self class] = %@", NSStringFromClass([self class]));
-    
-    unsigned int outCount = 0;
-    
-    objc_property_t *properties = class_copyPropertyList([self class], &outCount);
-    for (int i = 0; i < outCount; i++) {
-        objc_property_t property = properties[i];
-        NSString *propertyName = [NSString stringWithCString:property_getName(property) encoding:NSUTF8StringEncoding];
-        
-        /** 如果有Class遵守了协议,系统就会把以下方法认为是属性,故排除 */
-        if([propertyName isEqualToString:@"hash"]||
-           [propertyName isEqualToString:@"superclass"]||
-           [propertyName isEqualToString:@"description"]||
-           [propertyName isEqualToString:@"debugDescription"]) {
-            continue;
-        }
-        
-        /**
-         *  如果属性是"primaryKey"和"rowid"排除(JJBaseDBModel里面的)
-         if([propertyName isEqualToString:@"primaryKey"]||
-         [propertyName isEqualToString:@"rowid"])
-         {
-         continue;
-         }
-         */
-        
-//        NSLog(@"propertyName = %@",propertyName);
-        [pronames addObject:propertyName];
-        [self convertPropertyType:protypes withProperty:property];
-    }
-    free(properties);
-    
-    if(isGetSuper &&
-       ([self superclass] != [NSObject class]))
-    {
-        
-        //        NSLog(@"%@ getSelfPropertys", NSStringFromClass([self superclass]));
-        [[self superclass] getSelfPropertys:pronames protypes:protypes isGetSuper:isGetSuper];
+    // 遍历成员变量
+    BOOL stop = NO;
+    for (JJFMDBProperty *property in cachedProperties) {
+        enumeration(property, &stop);
+        if (stop) break;
     }
 }
-
-#pragma mark - Private Methods
 
 /**
- 
- *  propertyType = T@"NSString",&,N,V_pString    --> NSString //@ id 指针 对象
- propertyType = T@"NSNumber",&,N,V_pNumber    --> NSNumber
- propertyType = Ti,N,V_pInteger               --> long long
- propertyType = Ti,N,V_pint                  --> long long
- propertyType = Tq,N,V_plonglong             --> long long
- propertyType = Tc,N,V_pchar                 --> char
- propertyType = Tc,N,V_pBool                 --> char
- propertyType = Ts,N,V_pshort                --> short
- propertyType = Tf,N,V_pfloat                --> float
- propertyType = Tf,N,V_pCGFloat              --> float
- propertyType = Td,N,V_pdouble               --> double
- 
- 
- .... ^i 表示  int*  一般都不会用到
- *
- *  @param protypes 转换后存到protypes数组中
- *  @param property 属性
+ *  成员变量转换成JJFMDBProperty数组
  */
-+ (void)convertPropertyType:(NSMutableArray *)protypes withProperty:(objc_property_t)property
++ (NSMutableArray *)properties
 {
+    NSMutableArray *cachedProperties = [JJFMDBPropertyCache objectForKey:NSStringFromClass(self) forDictId:&JJCachedPropertiesKey];
     
-    NSString *propertyType = [NSString stringWithCString: property_getAttributes(property) encoding:NSUTF8StringEncoding];
-    //    NSLog(@"propertyType = %@", propertyType);
+    if (cachedProperties == nil) {
+        cachedProperties = [NSMutableArray array];
+        
+        [self enumerateClasses:^(__unsafe_unretained Class c, BOOL *stop) {
+            // 1.获得所有的成员变量
+            unsigned int outCount = 0;
+            objc_property_t *properties = class_copyPropertyList(c, &outCount);
+            
+            // 2.遍历每一个成员变量
+            for (unsigned int i = 0; i<outCount; i++) {
+                JJFMDBProperty *property = [JJFMDBProperty cachedProperty:properties[i]];
+                // 过滤掉系统自动添加的元素
+                if ([property.name isEqualToString:@"hash"]
+                    || [property.name isEqualToString:@"superclass"]
+                    || [property.name isEqualToString:@"description"]
+                    || [property.name isEqualToString:@"debugDescription"]) {
+                    continue;
+                }
+                [cachedProperties addObject:property];
+            }
+            
+            // 3.释放内存
+            free(properties);
+        }];
+        
+        [JJFMDBPropertyCache setObject:cachedProperties forKey:NSStringFromClass(self) forDictId:&JJCachedPropertiesKey];
+    }
     
-    if ([propertyType hasPrefix:@"T@"]) {
-        NSString *subType = [propertyType substringWithRange:NSMakeRange(3, [propertyType rangeOfString:@","].location-4)];
-        [protypes addObject:subType];
-    }
-    else if ([propertyType hasPrefix:@"Ti"] || [propertyType hasPrefix:@"Tq"]) {
-        [protypes addObject:@"long long"];
-    }
-    else if ([propertyType hasPrefix:@"Tf"]) {
-        [protypes addObject:@"float"];
-    }
-    else if([propertyType hasPrefix:@"Td"]) {
-        [protypes addObject:@"double"];
-    }
-    else if([propertyType hasPrefix:@"Tl"]) {
-        [protypes addObject:@"long"];
-    }
-    else if ([propertyType hasPrefix:@"Tc"]) {
-        [protypes addObject:@"char"];
-    }
-    else if([propertyType hasPrefix:@"Ts"]) {
-        [protypes addObject:@"short"];
-    }
-    else {
-        [protypes addObject:@"NSString"];
-    }
+    return cachedProperties;
 }
 
 @end
