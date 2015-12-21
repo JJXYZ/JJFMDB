@@ -15,7 +15,7 @@
 
 static char *kPrimaryKeyKey;
 - (void)setPrimaryKey:(NSString *)primaryKey {
-    objc_setAssociatedObject(self, &kPrimaryKeyKey, primaryKey, OBJC_ASSOCIATION_RETAIN);
+    objc_setAssociatedObject(self, &kPrimaryKeyKey, primaryKey, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
 - (NSString *)primaryKey {
