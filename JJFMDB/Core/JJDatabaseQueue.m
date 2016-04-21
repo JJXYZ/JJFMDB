@@ -42,7 +42,7 @@
 #if SQLITE_VERSION_NUMBER >= 3005000
         BOOL success = [_db openWithFlags:_openFlags];
 #else
-        BOOL success = [db open];
+        BOOL success = [_db open];
 #endif
         if (!success) {
             NSLog(@"FMDatabaseQueue could not reopen database for path %@", _path);
