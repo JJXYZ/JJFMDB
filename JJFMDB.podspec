@@ -6,10 +6,10 @@ Pod::Spec.new do |s|
                        封装FMDB,数据Model直接写入数据库，开发者不需要写任何SQL语句。
                        DESC
 
-  s.homepage         = "https://github.com/JayJJ/JJFMDB"
+  s.homepage         = "https://github.com/JJXYZ/JJFMDB"
   s.license          = 'MIT'  
   s.author           = { "Jay" => "hzhjjie@gmail.com" }  
-  s.source           = { :git => "https://github.com/JayJJ/JJFMDB.git", :tag => s.version.to_s }
+  s.source           = { :git => "https://github.com/JJXYZ/JJFMDB.git", :tag => s.version.to_s }
   
   s.platform     = :ios, '5.0'
   s.requires_arc = true  
