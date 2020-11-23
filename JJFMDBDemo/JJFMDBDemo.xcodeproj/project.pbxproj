@@ -596,6 +596,11 @@
 				INFOPLIST_FILE = JJFMDBDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FMDB\"",
+					"$(SRCROOT)/FMDB",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.JJ.JJFMDBDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -609,6 +614,11 @@
 				INFOPLIST_FILE = JJFMDBDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FMDB\"",
+					"$(SRCROOT)/FMDB",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.JJ.JJFMDBDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
