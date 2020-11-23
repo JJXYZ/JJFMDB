@@ -11,13 +11,13 @@ Pod::Spec.new do |s|
   s.author           = { "JJ" => "hzhjjie@gmail.com" }  
   s.source           = { :git => "https://github.com/JJXYZ/JJFMDB.git", :tag => s.version.to_s }
   
-  s.platform     = :ios, '5.0'
+  s.platform     = :ios, '9.0'
   s.requires_arc = true  
   
   s.source_files = "JJFMDB/Core/*","JJFMDB/Helper/*"
 
   s.frameworks = 'Foundation', 'UIKit'
   
-  s.dependency 'FMDB', '~> 2.7.5'
+  s.dependency 'FMDB', '2.7.5'
 
 end  
