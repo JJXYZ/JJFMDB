@@ -7,7 +7,7 @@
 
 * 手动导入：引入头文件JJFMDB.h
 
-* cocoapods导入：pod 'JJFMDB', '~> 2.0.0'
+* cocoapods导入：pod 'JJFMDB', '~> 2.0.3'
 
 注意:支持的类型,NSString,NSNumber,NSInteger,char,int,short,long long,float,CGFloat,BOOL,NSData,UIImage
 
