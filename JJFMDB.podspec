@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|  
   s.name             = "JJFMDB"
-  s.version          = "2.0.0"
+  s.version          = "2.0.1"
   s.summary          = "A SQLite Tool used on iOS."  
   s.description      = <<-DESC  
                        封装FMDB,数据Model直接写入数据库，开发者不需要写任何SQL语句。
@@ -18,7 +18,6 @@ Pod::Spec.new do |s|
 
   s.frameworks = 'Foundation', 'UIKit'
 
-  s.dependency 'FMDB', '~> 2.2'
-  s.dependency 'JJSandBox', '~> 1.0.0'
+  s.dependency 'JJSandBox', '~> 1.0.1'
   
 end  
