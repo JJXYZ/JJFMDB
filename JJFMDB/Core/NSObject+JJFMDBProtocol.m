@@ -31,6 +31,11 @@
     return [JJSandBox getPathForDocuments:[NSString stringWithFormat:@"jj_database.db"] inDir:@"DataBase"];
 }
 
+/** 唯一索引 */
++ (NSString *)jj_uniqueIndex {
+    return nil;
+}
+
 
 #pragma mark - Property
 
@@ -44,8 +49,6 @@ static char *kDbQueueKey;
     if (!queue) {
         queue = [[JJDatabaseQueue alloc] initWithPath:[self jj_databasePath]];
         objc_setAssociatedObject(self, &kDbQueueKey, queue, OBJC_ASSOCIATION_RETAIN);
-        
-        [self startToDB];
     }
     return queue;
 }

@@ -14,11 +14,17 @@
 
 @optional
 
+/** 返回数据库名 */
++ (NSString *)jj_databaseName;
+
 /** 返回表名 */
 + (const NSString *)jj_tableName;
 
 /** 返回数据库路径 */
 + (NSString *)jj_databasePath;
+
+/** 返回唯一索引 */
++ (NSString *)jj_uniqueIndex;
 
 @end
 

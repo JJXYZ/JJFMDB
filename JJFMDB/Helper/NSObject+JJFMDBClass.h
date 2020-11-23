@@ -17,16 +17,16 @@ typedef void (^JJFMDBClassesEnumeration)(Class c, BOOL *stop);
 @interface NSObject (JJFMDBClass)
 
 /** 只遍历当前的类 */
-+ (void)enumerateClass:(JJFMDBClassesEnumeration)enumeration;
++ (void)jj_enumerateClass:(JJFMDBClassesEnumeration)enumeration;
 
 /** 遍历到NSObject */
-+ (void)enumerateClasses:(JJFMDBClassesEnumeration)enumeration;
++ (void)jj_enumerateClasses:(JJFMDBClassesEnumeration)enumeration;
 
 /** 遍历到superClass */
-+ (void)enumerateClasses:(JJFMDBClassesEnumeration)enumeration superClass:(Class)superClass;
++ (void)jj_enumerateClasses:(JJFMDBClassesEnumeration)enumeration superClass:(Class)superClass;
 
 /** 遍历所有的类 */
-+ (void)enumerateAllClasses:(JJFMDBClassesEnumeration)enumeration;
++ (void)jj_enumerateAllClasses:(JJFMDBClassesEnumeration)enumeration;
 
 
 @end

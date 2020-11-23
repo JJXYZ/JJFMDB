@@ -16,7 +16,7 @@
 #pragma mark - Public Methods
 
 /** 只遍历当前的类 */
-+ (void)enumerateClass:(JJFMDBClassesEnumeration)enumeration {
++ (void)jj_enumerateClass:(JJFMDBClassesEnumeration)enumeration {
     
     // 1.没有block就直接返回
     if (enumeration == nil) return;
@@ -36,12 +36,12 @@
 }
 
 /** 遍历到NSObject */
-+ (void)enumerateClasses:(JJFMDBClassesEnumeration)enumeration {
-    [self enumerateClasses:enumeration superClass:[NSObject class]];
++ (void)jj_enumerateClasses:(JJFMDBClassesEnumeration)enumeration {
+    [self jj_enumerateClasses:enumeration superClass:[NSObject class]];
 }
 
 /** 遍历到superClass */
-+ (void)enumerateClasses:(JJFMDBClassesEnumeration)enumeration superClass:(Class)superClass {
++ (void)jj_enumerateClasses:(JJFMDBClassesEnumeration)enumeration superClass:(Class)superClass {
     
     // 1.没有block就直接返回
     if (enumeration == nil) return;
@@ -64,7 +64,7 @@
     }
 }
 
-+ (void)enumerateAllClasses:(JJFMDBClassesEnumeration)enumeration
++ (void)jj_enumerateAllClasses:(JJFMDBClassesEnumeration)enumeration
 {
     // 1.没有block就直接返回
     if (enumeration == nil) return;

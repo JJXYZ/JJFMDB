@@ -17,7 +17,7 @@
  *
  *  @return String
  */
-+ (NSString *)stringWithDate:(NSDate *)date;
++ (NSString *)jj_stringWithDate:(NSDate *)date;
 
 /**
  *  把String转换成Date,格式yyyy-MM-dd HH:mm:ss
@@ -26,7 +26,7 @@
  *
  *  @return Date
  */
-+ (NSDate *)dateWithString:(NSString *)str;
++ (NSDate *)jj_dateWithString:(NSString *)str;
 
 
 @end

@@ -35,24 +35,20 @@
 #pragma mark - Init
 
 + (void)startToDB {
-    [self loadProtypes];
     [self createTable];
-}
-
-
-#pragma mark - Private Methods
-
-/** 加载JJProperty数组 */
-+ (void)loadProtypes {
-    self.propertys = [self properties];
+    [self createUniqueIndex];
 }
 
 #pragma mark - Methods
 
+/** 加载JJProperty数组 */
++ (void)loadProtypes {
+    self.propertys = [self jj_properties];
+}
+
 /**
  *  根据bindingModel的类型,把数据库的值转换过来
  *
- *  @param bindingModel 继承JJBaseDBModel
  *  @param set          FMResultSet
  *  @param columeName   属性的Name
  *  @param columeType   属性的类型
@@ -90,7 +86,7 @@
     }
     else if ([columeType isEqualToString:@"NSDate"]) {
         NSString* datestr = [set stringForColumn:columeName];
-        [model setValue:[NSDate dateWithString:datestr] forKey:columeName];
+        [model setValue:[NSDate jj_dateWithString:datestr] forKey:columeName];
     }
     else if ([columeType isEqualToString:@"NSData"]) {
         NSString *filename = [set stringForColumn:columeName];
@@ -128,7 +124,7 @@
     }
     else if ([value isKindOfClass:[NSDate class]])
     {
-        value = [NSDate stringWithDate:value];
+        value = [NSDate jj_stringWithDate:value];
     }
 }
 
@@ -216,7 +212,7 @@
         return ;
     }
     
-    if (orderby != nil && ![orderby isEmptyWithTrim]) {
+    if (orderby != nil && ![orderby jj_isEmptyWithTrim]) {
         [SQL appendFormat:@"ORDER BY %@ ",orderby];
     }
     [SQL appendFormat:@"LIMIT %d OFFSET %d ",count, offset];
@@ -301,7 +297,7 @@
 /** 创建表 */
 + (void)createTable
 {
-    if ([self.jj_tableName isEmptyWithTrim]) {
+    if ([self.jj_tableName jj_isEmptyWithTrim]) {
         NSLog(@"TableName is None!");
         return;
     }
@@ -311,6 +307,17 @@
         [db executeUpdate:createTableSQL];
     }];
 }
+
++ (void)createUniqueIndex {
+    if (![self jj_uniqueIndex]) {
+        return;
+    }
+    [self.dbQueue inDatabaseAsync:^(FMDatabase *db) {
+        NSString *createIndexSQL = [NSString stringWithFormat:@"CREATE UNIQUE INDEX idx_%@ ON %@(%@);", [self jj_uniqueIndex], [self jj_tableName], [self jj_uniqueIndex]];
+        [db executeUpdate:createIndexSQL];
+    }];
+}
+
 
 
 + (void)tableAddColumn:(NSString *)column type:(NSString *)type results:(JJFMDBSuccess)block {
@@ -374,8 +381,28 @@
     }];
 }
 
++ (void)dropTable:(JJFMDBSuccess)block {
+    [self.dbQueue inDatabaseAsync:^(FMDatabase *db) {
+        NSString *delete = [NSString stringWithFormat:@"DROP TABLE %@", self.jj_tableName];
+        BOOL result = [db executeUpdate:delete];
+        
+        if (block) {
+            block(result);
+        }
+    }];
+}
 
 
++ (void)clearTable:(JJFMDBSuccess)block {
+    [self.dbQueue inDatabaseAsync:^(FMDatabase *db) {
+        NSString *delete = [NSString stringWithFormat:@"DELETE FROM %@",self.jj_tableName];
+        BOOL result = [db executeUpdate:delete];
+        
+        if (block) {
+            block(result);
+        }
+    }];
+}
 
 #pragma mark - Search
 
@@ -469,11 +496,11 @@
     [self.dbQueue inDatabaseAsync:^(FMDatabase *db) {
         
         NSMutableString *searchSQL = [NSMutableString stringWithFormat:@"SELECT * FROM %@ ", self.jj_tableName];
-        if (where != nil && ![where isEmptyWithTrim]) {
+        if (where != nil && ![where jj_isEmptyWithTrim]) {
             [searchSQL appendFormat:@"WHERE %@ ",where];
         }
         [self SQLString:searchSQL AddOder:orderBy offset:offset count:count];
-        FMResultSet *set =[db executeQuery:searchSQL];
+        FMResultSet *set = [db executeQuery:searchSQL];
         
         [self executeResult:set block:block];
     }];
@@ -806,17 +833,6 @@
         NSString *deleteSQL = [NSString stringWithFormat:@"DELETE FROM %@ WHERE %@",self.class.jj_tableName,whereKey];
         
         BOOL result = [db executeUpdate:deleteSQL withArgumentsInArray:values];
-        
-        if (block) {
-            block(result);
-        }
-    }];
-}
-
-- (void)clearTable:(JJFMDBSuccess)block {
-    [self.class.dbQueue inDatabaseAsync:^(FMDatabase *db) {
-        NSString *delete = [NSString stringWithFormat:@"DELETE FROM %@",self.class.jj_tableName];
-        BOOL result = [db executeUpdate:delete];
         
         if (block) {
             block(result);

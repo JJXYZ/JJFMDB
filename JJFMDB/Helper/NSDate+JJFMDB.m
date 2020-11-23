@@ -10,7 +10,7 @@
 
 @implementation NSDate (JJFMDB)
 
-+ (NSString *)stringWithDate:(NSDate *)date
++ (NSString *)jj_stringWithDate:(NSDate *)date
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
@@ -19,7 +19,7 @@
     return datestr;
 }
 
-+ (NSDate *)dateWithString:(NSString *)str
++ (NSDate *)jj_dateWithString:(NSString *)str
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void(^JJFMDBResults)(NSArray *results);
+typedef void(^JJFMDBResults)(NSMutableArray *results);
 typedef void(^JJFMDBSuccess)(BOOL isSuccess);
 typedef void(^JJFMDBCount)(int count);
 
@@ -16,6 +16,9 @@ typedef void(^JJFMDBCount)(int count);
 @interface NSObject (JJFMDBMethods)
 
 #pragma mark - Init
+
+/** 加载JJProperty数组 */
++ (void)loadProtypes;
 
 /** 启动DB */
 + (void)startToDB;
@@ -31,6 +34,11 @@ typedef void(^JJFMDBCount)(int count);
 /** 读取表所有的列名 */
 + (void)readTableColumns:(JJFMDBResults)block;
 
+/** 删除表 */
++ (void)dropTable:(JJFMDBSuccess)block;
+
+/** 清空表数据 */
++ (void)clearTable:(JJFMDBSuccess)block;
 
 #pragma mark - Search
 
@@ -148,7 +156,6 @@ typedef void(^JJFMDBCount)(int count);
 /**
  *  把model直接插入到数据库
  *
- *  @param model model
  *  @param block block
  */
 - (void)insertToDB:(JJFMDBSuccess)block;
@@ -156,7 +163,6 @@ typedef void(^JJFMDBCount)(int count);
 /**
  *  把model插入到数据库,如果存在(用primaryKey来判断),就更新(通过rowid或者primarykey来更新)
  *
- *  @param model model
  *  @param block block
  */
 - (void)insertUpdateToDB:(JJFMDBSuccess)block;
@@ -166,7 +172,6 @@ typedef void(^JJFMDBCount)(int count);
 /**
  *  把model插入到数据库,如果存在(where语句来判断),就更新(where语句来更新)
  *
- *  @param model model
  *  @param where where条件,自定义,例where:@"rowid = 2"或者@"string = 'Jay'"
  *  @param block block
  */
@@ -175,7 +180,6 @@ typedef void(^JJFMDBCount)(int count);
 /**
  *  把model插入到数据库,如果存在(where语句来判断),就更新(where语句来更新对应的updateKey)
  *
- *  @param model     model
  *  @param updateKey 需要更新的字段,例: @"name='Jay', age=10, height=1.8"
  *  @param where     where条件,自定义,例where:@"rowid = 2"或者@"string = 'Jay'"
  *  @param block     block
@@ -187,7 +191,6 @@ typedef void(^JJFMDBCount)(int count);
 /**
  *  把model插入到数据库,如果存在(whereDic语句来判断),就更新(whereDic语句来更新)
  *
- *  @param model    model
  *  @param whereDic where字典条件,例:@{@"name":@"Jay", @"age":@18}
  *  @param block    block
  */
@@ -196,7 +199,6 @@ typedef void(^JJFMDBCount)(int count);
 /**
  *  把model插入到数据库,如果存在(whereDic语句来判断),就更新(whereDic语句来更新对应的updateKey)
  *
- *  @param model        model
  *  @param updateKeyDic Update的数据,例:@{@"height":@1.8, @"weight":@60}
  *  @param whereDic     where字典条件,例:@{@"name":@"Jay", @"age":@18}
  *  @param block        block
@@ -208,7 +210,6 @@ typedef void(^JJFMDBCount)(int count);
 /**
  *  更新model,更新全部,通过rowid或者primarykey来更新数据
  *
- *  @param model model
  *  @param block block
  */
 - (void)updateToDB:(JJFMDBSuccess)block;
@@ -218,7 +219,6 @@ typedef void(^JJFMDBCount)(int count);
 /**
  *  更新model,更新全部,自定义where
  *
- *  @param model model
  *  @param where 更新的条件,例: @"height=100"
  *  @param block block
  */
@@ -239,7 +239,6 @@ typedef void(^JJFMDBCount)(int count);
 /**
  *  更新model,更新全部,自定义whereDic
  *
- *  @param model    model
  *  @param whereDic where字典条件,例:@{@"name":@"Jay", @"age":@18}
  *  @param block    block
  */
@@ -248,7 +247,7 @@ typedef void(^JJFMDBCount)(int count);
 /**
  *  更新model,自定义whereDic
  *
- *  @param UpdateKeyDic Update的数据,例:@{@"height":@1.8, @"weight":@60}
+ *  @param updateKeyDic Update的数据,例:@{@"height":@1.8, @"weight":@60}
  *  @param whereDic     where字典条件,例:@{@"name":@"Jay", @"age":@18}
  *  @param block        block
  */
@@ -259,7 +258,6 @@ typedef void(^JJFMDBCount)(int count);
 /**
  *  删除model,通过rowid或者primarykey来删除数据
  *
- *  @param model model
  *  @param block block
  */
 - (void)deleteToDB:(JJFMDBSuccess)block;
@@ -276,22 +274,16 @@ typedef void(^JJFMDBCount)(int count);
 /**
  *  根据where条件删除数据
  *
- *  @param where where字典条件,例:@{@"name":@"Jay", @"age":@18}
+ *  @param whereDic where字典条件,例:@{@"name":@"Jay", @"age":@18}
  *  @param block block
  */
 - (void)deleteToDBDic:(NSDictionary *)whereDic result:(JJFMDBSuccess)block;
-
-
-/** 清空表数据 */
-- (void)clearTable:(JJFMDBSuccess)block;
-
 
 #pragma mark - isExist
 
 /**
  *  是否存在model(用primaryKey来判断)
  *
- *  @param model
  *  @param block 返回YES存在,NO不存在
  */
 - (void)isExistsToDB:(JJFMDBSuccess)block;

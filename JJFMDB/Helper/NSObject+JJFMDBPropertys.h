@@ -23,12 +23,12 @@ typedef void(^JJFMDBPropertysEnumeration)(JJFMDBProperty *property, BOOL *stop);
 /**
  *  遍历所有的成员
  */
-+ (void)enumerateProperties:(JJFMDBPropertysEnumeration)enumeration;
++ (void)jj_enumerateProperties:(JJFMDBPropertysEnumeration)enumeration;
 
 /**
  *  成员变量转换成JJFMDBProperty数组
  */
-+ (NSMutableArray *)properties;
++ (NSMutableArray *)jj_properties;
 
 
 @end

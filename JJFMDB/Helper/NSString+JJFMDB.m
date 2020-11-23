@@ -10,12 +10,12 @@
 
 @implementation NSString (JJFMDB)
 
-- (BOOL)isEmptyWithTrim
+- (BOOL)jj_isEmptyWithTrim
 {
-    return [[self stringWithTrim] isEqualToString:@""];
+    return [[self jj_stringWithTrim] isEqualToString:@""];
 }
 
-- (NSString *)stringWithTrim
+- (NSString *)jj_stringWithTrim
 {
     return [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 }

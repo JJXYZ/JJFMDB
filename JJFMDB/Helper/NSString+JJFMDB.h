@@ -15,14 +15,14 @@
  *
  *  @return YES/NO
  */
-- (BOOL)isEmptyWithTrim;
+- (BOOL)jj_isEmptyWithTrim;
 
 /**
  *  去掉空格
  *
  *  @return NSString
  */
-- (NSString *)stringWithTrim;
+- (NSString *)jj_stringWithTrim;
 
 
 @end

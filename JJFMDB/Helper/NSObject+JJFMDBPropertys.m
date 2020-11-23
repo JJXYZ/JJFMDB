@@ -25,10 +25,10 @@ static const char JJCachedPropertiesKey = '\0';
 /**
  *  遍历所有的成员
  */
-+ (void)enumerateProperties:(JJFMDBPropertysEnumeration)enumeration
++ (void)jj_enumerateProperties:(JJFMDBPropertysEnumeration)enumeration
 {
     // 获得成员变量
-    NSArray *cachedProperties = [self properties];
+    NSArray *cachedProperties = [self jj_properties];
     
     // 遍历成员变量
     BOOL stop = NO;
@@ -41,14 +41,14 @@ static const char JJCachedPropertiesKey = '\0';
 /**
  *  成员变量转换成JJFMDBProperty数组
  */
-+ (NSMutableArray *)properties
++ (NSMutableArray *)jj_properties
 {
     NSMutableArray *cachedProperties = [JJFMDBPropertyCache objectForKey:NSStringFromClass(self) forDictId:&JJCachedPropertiesKey];
     
     if (cachedProperties == nil) {
         cachedProperties = [NSMutableArray array];
         
-        [self enumerateClasses:^(__unsafe_unretained Class c, BOOL *stop) {
+        [self jj_enumerateClasses:^(__unsafe_unretained Class c, BOOL *stop) {
             // 1.获得所有的成员变量
             unsigned int outCount = 0;
             objc_property_t *properties = class_copyPropertyList(c, &outCount);

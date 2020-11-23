@@ -42,7 +42,7 @@
  
  .... ^i 表示  int*  一般都不会用到
  *
- *  @param protypes 转换后存到protypes数组中
+ *  @ protypes 转换后存到protypes数组中
  *  @param property 属性
  */
 
