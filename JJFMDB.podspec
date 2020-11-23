@@ -18,4 +18,6 @@ Pod::Spec.new do |s|
 
   s.frameworks = 'Foundation', 'UIKit'
   
+  s.dependency 'FMDB', '~> 2.7.5'
+
 end  
