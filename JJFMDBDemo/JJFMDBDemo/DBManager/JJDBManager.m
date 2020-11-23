@@ -31,7 +31,10 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        
+        [JJDog loadProtypes];
+        [JJDog startToDB];
+        [JJCat loadProtypes];
+        [JJCat startToDB];
     }
     return self;
 }

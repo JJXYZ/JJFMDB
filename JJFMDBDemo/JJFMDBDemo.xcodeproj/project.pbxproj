@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		614926547AE9818D2411477F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B75369E0C06767B58DE0459 /* libPods.a */; };
+		1D9B13E3430963ED497FEE6B /* libPods-JJFMDBDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 79F3CE9D0E20F2905075743D /* libPods-JJFMDBDemo.a */; };
+		35822E17256BA46700AC4375 /* JJSandBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 35822E15256BA46700AC4375 /* JJSandBox.m */; };
 		69300F421C12D133004956C3 /* NSObject+JJFMDBMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 69300F411C12D133004956C3 /* NSObject+JJFMDBMethods.m */; };
 		69300F4E1C137542004956C3 /* JJCat.m in Sources */ = {isa = PBXBuildFile; fileRef = 69300F4D1C137542004956C3 /* JJCat.m */; };
 		6933045E1BFB56EE00F8B3E0 /* JJDog.m in Sources */ = {isa = PBXBuildFile; fileRef = 6933045D1BFB56EE00F8B3E0 /* JJDog.m */; };
@@ -49,7 +50,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		23519301ED95741BAF684C77 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		35822E15256BA46700AC4375 /* JJSandBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JJSandBox.m; sourceTree = "<group>"; };
+		35822E16256BA46700AC4375 /* JJSandBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JJSandBox.h; sourceTree = "<group>"; };
+		3B02F2FFDBAA586EE2F8BBAB /* Pods-JJFMDBDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JJFMDBDemo.debug.xcconfig"; path = "Target Support Files/Pods-JJFMDBDemo/Pods-JJFMDBDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		5EB1647F074939167DBC295B /* Pods-JJFMDBDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JJFMDBDemo.release.xcconfig"; path = "Target Support Files/Pods-JJFMDBDemo/Pods-JJFMDBDemo.release.xcconfig"; sourceTree = "<group>"; };
 		69300F401C12D133004956C3 /* NSObject+JJFMDBMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+JJFMDBMethods.h"; sourceTree = "<group>"; };
 		69300F411C12D133004956C3 /* NSObject+JJFMDBMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+JJFMDBMethods.m"; sourceTree = "<group>"; };
 		69300F4B1C12FB8D004956C3 /* JJFMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JJFMDB.h; sourceTree = "<group>"; };
@@ -94,8 +98,7 @@
 		69B0D31F1BFA081100DAE25B /* NSDate+JJFMDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+JJFMDB.m"; sourceTree = "<group>"; };
 		69B0D3211BFA0AC900DAE25B /* NSString+JJFMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+JJFMDB.h"; sourceTree = "<group>"; };
 		69B0D3221BFA0AC900DAE25B /* NSString+JJFMDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+JJFMDB.m"; sourceTree = "<group>"; };
-		7521FBF6585E588DD634012A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		7B75369E0C06767B58DE0459 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		79F3CE9D0E20F2905075743D /* libPods-JJFMDBDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JJFMDBDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,7 +106,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				614926547AE9818D2411477F /* libPods.a in Frameworks */,
+				1D9B13E3430963ED497FEE6B /* libPods-JJFMDBDemo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,8 +154,8 @@
 				69B0D2F41BF9FA6700DAE25B /* JJFMDBDemoTests */,
 				69B0D2FF1BF9FA6700DAE25B /* JJFMDBDemoUITests */,
 				69B0D2D91BF9FA6700DAE25B /* Products */,
-				A2EC931A86A497720EFD900E /* Pods */,
-				6C1466859398CF266F8E4701 /* Frameworks */,
+				7E51EABBE508C86F15BF12E1 /* Pods */,
+				A6F94CF5804CA137E170A4AE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -241,6 +244,8 @@
 		69B0D3101BF9FDE600DAE25B /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				35822E16256BA46700AC4375 /* JJSandBox.h */,
+				35822E15256BA46700AC4375 /* JJSandBox.m */,
 				695403D41C145BD600B777EF /* JJFMDBProperty.h */,
 				695403D51C145BD600B777EF /* JJFMDBProperty.m */,
 				695403D71C1463BB00B777EF /* JJFMDBPropertyCache.h */,
@@ -257,21 +262,22 @@
 			path = Helper;
 			sourceTree = "<group>";
 		};
-		6C1466859398CF266F8E4701 /* Frameworks */ = {
+		7E51EABBE508C86F15BF12E1 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				7B75369E0C06767B58DE0459 /* libPods.a */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		A2EC931A86A497720EFD900E /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				7521FBF6585E588DD634012A /* Pods.debug.xcconfig */,
-				23519301ED95741BAF684C77 /* Pods.release.xcconfig */,
+				3B02F2FFDBAA586EE2F8BBAB /* Pods-JJFMDBDemo.debug.xcconfig */,
+				5EB1647F074939167DBC295B /* Pods-JJFMDBDemo.release.xcconfig */,
 			);
 			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		A6F94CF5804CA137E170A4AE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				79F3CE9D0E20F2905075743D /* libPods-JJFMDBDemo.a */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -281,11 +287,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 69B0D3051BF9FA6700DAE25B /* Build configuration list for PBXNativeTarget "JJFMDBDemo" */;
 			buildPhases = (
-				F6FDC7CC567DCAA5D4275F93 /* Check Pods Manifest.lock */,
+				6033DE305F935FE8AA5DD130 /* [CP] Check Pods Manifest.lock */,
 				69B0D2D41BF9FA6700DAE25B /* Sources */,
 				69B0D2D51BF9FA6700DAE25B /* Frameworks */,
 				69B0D2D61BF9FA6700DAE25B /* Resources */,
-				86ECE55A5AC54E141A376388 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -360,6 +365,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -403,34 +409,26 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		86ECE55A5AC54E141A376388 /* Copy Pods Resources */ = {
+		6033DE305F935FE8AA5DD130 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
+			inputFileListPaths = (
 			);
-			name = "Copy Pods Resources";
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-JJFMDBDemo-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F6FDC7CC567DCAA5D4275F93 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -444,6 +442,7 @@
 				693304621BFB5C8700F8B3E0 /* JJDBManager.m in Sources */,
 				6933045E1BFB56EE00F8B3E0 /* JJDog.m in Sources */,
 				695403D01C14188600B777EF /* NSObject+JJFMDBProtocol.m in Sources */,
+				35822E17256BA46700AC4375 /* JJSandBox.m in Sources */,
 				69B0D3201BFA081100DAE25B /* NSDate+JJFMDB.m in Sources */,
 				69300F4E1C137542004956C3 /* JJCat.m in Sources */,
 				69B0D3231BFA0AC900DAE25B /* NSString+JJFMDB.m in Sources */,
@@ -592,10 +591,11 @@
 		};
 		69B0D3061BF9FA6700DAE25B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7521FBF6585E588DD634012A /* Pods.debug.xcconfig */;
+			baseConfigurationReference = 3B02F2FFDBAA586EE2F8BBAB /* Pods-JJFMDBDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = JJFMDBDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.JJ.JJFMDBDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -604,10 +604,11 @@
 		};
 		69B0D3071BF9FA6700DAE25B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 23519301ED95741BAF684C77 /* Pods.release.xcconfig */;
+			baseConfigurationReference = 5EB1647F074939167DBC295B /* Pods-JJFMDBDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = JJFMDBDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.JJ.JJFMDBDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
